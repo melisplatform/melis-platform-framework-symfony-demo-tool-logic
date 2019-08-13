@@ -1,0 +1,3 @@
+test_route:
+  path: /test
+  controller: MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\MelisPlatformFrameworkSymfonyDemoToolLogicController::index
