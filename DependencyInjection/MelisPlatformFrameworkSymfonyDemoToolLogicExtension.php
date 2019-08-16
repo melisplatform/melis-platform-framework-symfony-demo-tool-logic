@@ -16,8 +16,5 @@ class MelisPlatformFrameworkSymfonyDemoToolLogicExtension extends Extension
             new FileLocator(__DIR__.'/../Resources/config')
         );
         $loader->load('services.yaml');
-//        $container->register('test_service', 'MelisCodeExampleSymfony\TestBundle\Service\TestService');
-//        $container->register('test_controller', 'MelisCodeExampleSymfony\TestBundle\Controller\TestController')
-//        ->addArgument(new Reference('test_service'));
     }
 }

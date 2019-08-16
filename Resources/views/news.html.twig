@@ -1,0 +1,25 @@
+{% block melis_news_list %}
+    <h3>News List</h3><br />
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Paragraph 1</th>
+            <th>Paragraph 2</th>
+            <th>Paragraph 3</th>
+            <th>Paragraph 4</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for news in news_lists %}
+            <tr>
+                <td>{{ news['cnews_title'] }}</td>
+                <td>{{ news['cnews_paragraph1']|length > 50 ? news['cnews_paragraph4']|slice(0, 50) ~ '...' : news['cnews_paragraph4'] }}</td>
+                <td>{{ news['cnews_paragraph2']|length > 50 ? news['cnews_paragraph4']|slice(0, 50) ~ '...' : news['cnews_paragraph4'] }}</td>
+                <td>{{ news['cnews_paragraph3']|length > 50 ? news['cnews_paragraph4']|slice(0, 50) ~ '...' : news['cnews_paragraph4'] }}</td>
+                <td>{{ news['cnews_paragraph4']|length > 50 ? news['cnews_paragraph4']|slice(0, 50) ~ '...' : news['cnews_paragraph4'] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

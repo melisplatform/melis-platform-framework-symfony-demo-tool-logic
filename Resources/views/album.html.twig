@@ -1,0 +1,21 @@
+{% block album_list %}
+    <h3>Album List</h3><br />
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Album name</th>
+            <th>Album number</th>
+            <th>Album Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for album in album_list %}
+            <tr>
+                <td>{{ album.getAlbName() }}</td>
+                <td>{{ album.getAlbSongNum() }}</td>
+                <td>{{ album.getAlbDate() }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

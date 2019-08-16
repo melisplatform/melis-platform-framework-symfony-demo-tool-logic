@@ -15,10 +15,8 @@ class MelisPlatformFrameworkSymfonyDemoToolLogicCompiler implements CompilerPass
 {
     public function process(ContainerBuilder $containerBuilder)
     {
-        if($containerBuilder->has('cvuorinen_example.greeter')){
-            $containerBuilder->getDefinition('cvuorinen_example.greeter')->setPublic(true);
+        if($containerBuilder->has('logic_tool.service')){
+            $containerBuilder->getDefinition('logic_tool.service')->setPublic(true);
         }
-//        print_r($containerBuilder->getServiceIds());exit;
-//        print_r($containerBuilder->getDefinition('MelisCodeExampleSymfony\TestBundle\Service\TestService'));exit;
     }
 }

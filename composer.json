@@ -31,9 +31,7 @@
   },
   "require": {
     "php": "^7.0",
-    "ext-openssl": "*",
-    "ext-json": "*",
-    "ext-pdo_mysql": "*"
+    "melisplatform/melis-platform-framework-symfony": "*"
   },
   "autoload": {
     "psr-4": {

@@ -1,0 +1,2 @@
+tool.title: Un embryon d'outil fait en Symfony4
+tool.description: Ce outil de demo a pour but de montrer comment utiliser le framework Symfony4 à l'intérieur de Melis Platform, et ne pas être bloqué en ZF.
