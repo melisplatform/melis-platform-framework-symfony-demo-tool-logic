@@ -30,8 +30,7 @@
     "melis-module-category": "core"
   },
   "require": {
-    "php": "^7.0",
-    "melisplatform/melis-platform-framework-symfony": "*"
+    "php": "^7.0"
   },
   "autoload": {
     "psr-4": {
