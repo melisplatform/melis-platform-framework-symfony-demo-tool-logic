@@ -31,7 +31,7 @@
   },
   "require": {
     "php": "^7.0",
-    "melisplatform/melis-platform-framework-symfony": "*"
+    "melisplatform/melis-platform-framework-symfony": "master@dev"
   },
   "autoload": {
     "psr-4": {
