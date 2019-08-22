@@ -8,6 +8,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MainController extends AbstractController
 {
+    /**
+     * Function to get the album list
+     * and the cms news list using the Melis
+     * Platform MelisCmsNews service
+     *
+     * @return Response
+     */
     public function list(): Response
     {
         try {

@@ -1,4 +1,7 @@
 services:
+  MelisPlatformFrameworkSymfonyDemoToolLogic\Repository\AlbumRepository:
+    autowire: true
+    tags: ['doctrine.repository_service']
   #registering a locale listener to use the melis platform language with higher priority
   MelisPlatformFrameworkSymfonyDemoToolLogic\EventListener\LocaleListener:
     arguments: ['@service_container']

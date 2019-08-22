@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: cmaka
- * Date: 13/08/2019
- * Time: 5:15 PM
- */
 
 namespace MelisPlatformFrameworkSymfonyDemoToolLogic\DependencyInjection\Compiler;
 
