@@ -22,8 +22,8 @@ class MainController extends AbstractController
              * Get the Melis Platform services registered in zend
              * service manager
              */
-            $melisServices = $this->get('melis_platform.services')->getService('MelisCmsNewsService');
-            $newsLists = $melisServices->getNewsList(null, null, null, null, null, null, false, null, 10);
+            $melisServices = $this->get('melis_platform.services')->getService('MelisCoreTableLang');
+            $melisCorelangList = $melisServices->fetchAll()->toArray();
 
             /**
              * Get the album list using
@@ -33,7 +33,7 @@ class MainController extends AbstractController
                 ->getRepository(Album::class)
                 ->findAll();
 
-            $view = $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/lists.html.twig', ['album_list' => $album, 'news_lists' => $newsLists])->getContent();
+            $view = $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/lists.html.twig', ['album_list' => $album, 'lang_core_list' => $melisCorelangList])->getContent();
             return new Response($view);
         }catch (\Exception $ex){
             exit($ex->getMessage());

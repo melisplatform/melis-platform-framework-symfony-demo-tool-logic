@@ -1,0 +1,24 @@
+{% block melis_lang_list %}
+    <h3>Language List</h3>
+    <p>
+        This is the list that came from the melis platform language table using
+        the registered services inside Symfony.<br/>
+        <code>$this->get('melis_platform.services')->getService('MelisCoreTableLang')</code>
+    </p>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Language Locale</th>
+            <th>Language Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for lang in lang_core_list %}
+            <tr>
+                <td>{{ lang['lang_locale'] }}</td>
+                <td>{{ lang['lang_name'] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
