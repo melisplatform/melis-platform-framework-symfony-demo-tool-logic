@@ -1,3 +1,8 @@
+#in this route, we added a prefix /melis
+#because we wan't our route to access
+#data in the Melis Platform Back office
+#if you didn't put a /melis in your route
+#then it will get the data from the front (site)
 list_route:
-  path: /list
+  path: /melis/list
   controller: MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\MainController::list
