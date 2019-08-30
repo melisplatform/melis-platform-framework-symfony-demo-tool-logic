@@ -3,5 +3,5 @@ tool.description: This demo tool has for goal to show how you can use the framew
 tool.album_table_desc: This is the list that came from the database that has been fetched using Symfony application.
 tool.lang_table_desc: This is the list that came from the melis platform language table that has been registered as
   service (<code>MelisCoreTableLang</code>) and called inside Symfony application<br/>
-  using a service id (<code>melis_platform.services</code>) that automatically points to the registered services of the platform.<br/>
-  (<code>$this->get('melis_platform.services')->getService('MelisCoreTableLang')</code>)
+  using a service id (<code>melis_platform.service_manager</code>) that automatically points to the registered services of the platform.<br/>
+  (<code>$this->get('melis_platform.service_manager')->getService('MelisCoreTableLang')</code>)

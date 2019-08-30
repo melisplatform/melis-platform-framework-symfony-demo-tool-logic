@@ -22,7 +22,7 @@ class MainController extends AbstractController
              * Get the Melis Platform services registered in zend
              * service manager
              */
-            $melisServices = $this->get('melis_platform.services')->getService('MelisCoreTableLang');
+            $melisServices = $this->get('melis_platform.service_manager')->getService('MelisCoreTableLang');
             $melisCorelangList = $melisServices->fetchAll()->toArray();
 
             /**

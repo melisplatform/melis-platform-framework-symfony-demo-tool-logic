@@ -29,7 +29,7 @@ class LocaleListener
          * Get the locale used of melis platform
          * to override the default locale of symfony
          */
-        $melisService = $this->container->get('melis_platform.services');
+        $melisService = $this->container->get('melis_platform.service_manager');
         if(!empty($melisService->getMelisLangLocale())){
             $request->setLocale($melisService->getMelisLangLocale());
         }
