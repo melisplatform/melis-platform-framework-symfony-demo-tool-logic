@@ -23,19 +23,14 @@
     "zf2",
     "module"
   ],
-  "extra": {
-    "module-name": "MelisPlatformFrameworkSymfonyDemoToolLogic",
-    "dbdeploy": false,
-    "melis-site": false,
-    "melis-module-category": "core"
-  },
   "require": {
     "php": "^7.0",
     "melisplatform/melis-platform-framework-symfony": "*"
   },
   "autoload": {
     "psr-4": {
-      "MelisPlatformFrameworkSymfonyDemoToolLogic\\": ""
+      "MelisPlatformFrameworkSymfonyDemoToolLogic\\": "",
+      "App\\": ["../../../thirdparty/Symfony/src/"]
     }
   }
 }
