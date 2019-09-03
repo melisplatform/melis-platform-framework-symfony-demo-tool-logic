@@ -1,15 +1,15 @@
 # melis-platform-framework-symfony-demo-tool-logic
-This bundle handle the request of melisplatform/melis-platform-framework-symfony-demo-tool
-to display data. It access the database, translates the text and rendered the views.
+This bundle handles the request of melisplatform/melis-platform-framework-symfony-demo-tool
+to display data. It accesses the database, translates the text and renders the views.
 
 # Getting  Started
-This instructions will get you a copy of the project up and running on your machine.
+These instructions will get you a copy of the project up and running on your machine.
 
 ## Prerequisites
-You will need the following in order to have this module running.
+You will need the following in order to have this module running:
 * melisplatform/melis-platform-framework-symfony
 
-This will automatically be done when using composer.
+It will automatically be done when using composer.
 
 ## Installing
 Run the composer command:
@@ -20,10 +20,8 @@ composer require melisplatform/melis-platform-framework-symfony-demo-tool-logic
 ## Running the code
 
 ### Activating the bundle
-Activating this bundle is just the same 
-the way you activate your symfony bundle inside symfony application. 
-You just need to include it's bundle class to the list of bundle inside 
-symfony application most probably in bundles.php file.
+Activating this bundle is just the same way you activate your symfony bundle inside Symfony application. 
+You just need to include its bundle class to the list of bundles inside Symfony application (most probably in bundles.php file).
 
 ```
 return [
@@ -37,13 +35,11 @@ return [
     MelisPlatformFrameworkSymfonyDemoToolLogic\MelisPlatformFrameworkSymfonyDemoToolLogicBundle::class => ['all' => true]
 ];
 ```
-Don't forget to activate also the MelisPlatformFrameworkSymfonyBundle class since this bundle require's it.
+Don't forget to activate also the MelisPlatformFrameworkSymfonyBundle class since this bundle requires it.
 
 ### Routes
-Since this bundle has it's own routes, we need to include it inside symfony application
-so that symfony can recognize it.\
-So inside symfony application, most likely in routes.yaml file (if symfony uses yaml as extension)
-we just need to include the bundle's route.
+Since this bundle has its own routes, we need to include it inside Symfony application for Symfony to recognize it.
+So we just need to include the bundle's route inside Symfony application (most likely in routes.yaml file if Symfony uses yaml as extension).
 ```
 melis_platform:
   resource: "@MelisPlatformFrameworkSymfonyDemoToolLogicBundle/Resources/config/routing.yaml"
