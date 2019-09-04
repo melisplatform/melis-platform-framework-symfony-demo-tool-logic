@@ -4,5 +4,5 @@
 #if you didn't put a /melis in your route
 #then it will get the data from the front (site)
 list_route:
-  path: /melis/symfony_list
+  path: /melis/symfony-list
   controller: MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\MainController::list
