@@ -1,7 +1,4 @@
 tool.title: A tool embryo made in Symfony4
 tool.description: This demo tool has for goal to show how you can use the framework Symfony4 inside Melis Platform, so you're not locked on ZF.
-tool.album_table_desc: This is the list that came from the database that has been fetched using Symfony application.
-tool.lang_table_desc: This is the list that came from the melis platform language table that has been registered as
-  service (<code>MelisCoreTableLang</code>) and called inside Symfony application<br/>
-  using a service id (<code>melis_platform.service_manager</code>) that automatically points to the registered services of the platform.<br/>
-  (<code>$this->get('melis_platform.service_manager')->getService('MelisCoreTableLang')</code>)
+tool.album_table_desc: The table below shows the data fetched from the database using Symfony.
+tool.lang_table_desc: The table below shows the data fetched from Melis Platform Services using Symfony.
