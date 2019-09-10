@@ -24,7 +24,7 @@
     "module"
   ],
   "require": {
-    "melisplatform/melis-platform-framework-symfony": "*"
+    "melisplatform/melis-platform-framework-symfony": "^3.1"
   },
   "autoload": {
     "psr-4": {
