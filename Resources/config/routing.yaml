@@ -3,6 +3,15 @@
 #data in the Melis Platform Back office
 #if you didn't put a /melis in your route
 #then it will get the data from the front (site)
+
 list_route:
   path: /melis/symfony-list
   controller: MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\MainController::list
+
+#we used the same function in the controller
+#to ge the data for the plugin.
+#This time we didn't put a /melis on our route
+#since we need to access it in the front
+plugin_route:
+  path: /symfony-plugin
+  controller: MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\MainController::getAlbums

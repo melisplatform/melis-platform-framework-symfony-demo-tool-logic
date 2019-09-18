@@ -39,4 +39,26 @@ class MainController extends AbstractController
             exit($ex->getMessage());
         }
     }
+
+    /**
+     * Get all albums
+     *
+     * @return Response
+     */
+    public function getAlbums(): Response
+    {
+        try {
+            /**
+             * Get the album list using
+             * the album entity
+             */
+            $album = $this->getDoctrine()
+                ->getRepository(Album::class)
+                ->findAll();
+            $view = $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/album.html.twig', ['album_list' => $album])->getContent();
+            return new Response($view);
+        }catch (\Exception $ex){
+            exit($ex->getMessage());
+        }
+    }
 }
