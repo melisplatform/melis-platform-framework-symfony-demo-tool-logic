@@ -9,6 +9,7 @@
             <th>Album name</th>
             <th>Album number</th>
             <th>Album Date</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -17,6 +18,10 @@
                 <td>{{ album.getAlbName() }}</td>
                 <td>{{ album.getAlbSongNum() }}</td>
                 <td>{{ album.getAlbDate() }}</td>
+                <td>
+                    <a href="#" data-albid="{{ album.getId() }}" class="btn btn-info btn_update"><i class="fa fa-pencil"></i></a>
+                    <a href="#" data-albid="{{ album.getId() }}" class="btn btn-danger btn_delete"><i class="fa fa-trash"></i></a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>

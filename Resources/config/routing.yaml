@@ -15,3 +15,15 @@ list_route:
 plugin_route:
   path: /symfony-plugin
   controller: MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\MainController::getAlbums
+
+#Get album by id
+get_album_by_id:
+  path: /melis/get-album/{id}
+  controller : MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\MainController::getAlbumById
+  methods:    GET|HEAD
+
+#Save
+save_album:
+  path: /melis/save-album
+  controller: MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\MainController::saveAlbum
+  methods:    POST

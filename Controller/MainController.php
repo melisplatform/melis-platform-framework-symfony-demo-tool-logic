@@ -3,8 +3,13 @@
 namespace MelisPlatformFrameworkSymfonyDemoToolLogic\Controller;
 
 use MelisPlatformFrameworkSymfonyDemoToolLogic\Entity\Album;
+use MelisPlatformFrameworkSymfonyDemoToolLogic\Form\Type\AlbumType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class MainController extends AbstractController
 {
@@ -57,6 +62,70 @@ class MainController extends AbstractController
                 ->findAll();
             $view = $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/album.html.twig', ['album_list' => $album])->getContent();
             return new Response($view);
+        }catch (\Exception $ex){
+            exit($ex->getMessage());
+        }
+    }
+
+    /**
+     * @param $id
+     * @return Response
+     */
+    public function getAlbumById($id)
+    {
+        try{
+            $album = $this->getDoctrine()
+                ->getRepository(Album::class)
+                ->find($id);
+
+            if (!$album) {
+                throw $this->createNotFoundException(
+                    'No album found for id '.$id
+                );
+            }
+
+            $form = $this->createForm(AlbumType::class, $album, [
+                'attr' => [
+                    'id' => 'album_form'
+                ]
+            ]);
+
+            return $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/form.html.twig', ['form' => $form->createView()]);
+        }catch (\Exception $ex){
+            exit($ex->getMessage());
+        }
+    }
+
+    /**
+     * @param $id
+     * @param Request $request
+     * @return Response
+     */
+    public function saveAlbum($id, Request $request): Response
+    {exit('x');
+        try {
+            $entityManager = $this->getDoctrine()->getManager();
+
+            if(empty($id)) {
+                $album = new Album();
+            }else{
+                $album = $entityManager->getRepository(Album::class)->find($id);
+
+                if (!$album) {
+                    throw $this->createNotFoundException(
+                        'No album found for id '.$id
+                    );
+                }
+            }
+
+            $album->setAlbName($request->get('alb_name'));
+            $album->setAlbSongNum($request->get('alb_song_num'));
+            // tell Doctrine you want to (eventually) save the Album (no queries yet)
+            $entityManager->persist($album);
+            // actually executes the queries
+            $entityManager->flush();
+
+            return new Response('Album successfully saved');
         }catch (\Exception $ex){
             exit($ex->getMessage());
         }
