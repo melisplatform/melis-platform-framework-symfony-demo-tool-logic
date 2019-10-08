@@ -33,7 +33,7 @@ class MainController extends AbstractController
                 ->getRepository(Album::class)
                 ->findAll();
 
-            $view = $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/lists.html.twig', ['album_list' => $album, 'lang_core_list' => $melisCorelangList])->getContent();
+            $view = $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/lists.html.twig', ['album_list' => $album, 'lang_core_list' => $melisCorelangList, 'translate' => true])->getContent();
             return new Response($view);
         }catch (\Exception $ex){
             exit($ex->getMessage());
@@ -55,7 +55,7 @@ class MainController extends AbstractController
             $album = $this->getDoctrine()
                 ->getRepository(Album::class)
                 ->findAll();
-            $view = $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/album.html.twig', ['album_list' => $album])->getContent();
+            $view = $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/album.html.twig', ['album_list' => $album, 'translate' => false])->getContent();
             return new Response($view);
         }catch (\Exception $ex){
             exit($ex->getMessage());
