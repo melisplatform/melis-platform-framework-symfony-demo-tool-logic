@@ -1,0 +1,48 @@
+melis_platform_framework_symfony_demo_tool_logic:
+    table:
+        album_table:
+            target: '#tableSymfonyDemoTool'
+            ajaxUrl: '/melis/album-list'
+            dataFunction: ''
+            ajaxCallback: ''
+            filters:
+                left:
+                    limit:
+                        view: '@MelisPlatformFrameworkSymfonyDemoToolLogic/filter_limit.html.twig'
+                center:
+                    search:
+                        view: '@MelisPlatformFrameworkSymfonyDemoToolLogic/filter_search.html.twig'
+                right:
+                    refresh:
+                        view: '@MelisPlatformFrameworkSymfonyDemoToolLogic/filter_refresh.html.twig'
+            columns:
+                albId:
+                    text: 'Id'
+                    css:
+                        width: '5%'
+                        padding-right: 0
+                    sortable: false
+                albName:
+                    text: 'Name'
+                    css:
+                        width: '50%'
+                        padding-right: 0
+                    sortable: false
+                albSongNum:
+                    text: 'Song number'
+                    css:
+                        width: '25%'
+                        padding-right: 0
+                    sortable: false
+                albDate:
+                    text: 'Date'
+                    css:
+                        width: '25%'
+                        padding-right: 0
+                    sortable: false
+            searchables: ['alb_name', 'alb_song_num']
+            actionButtons:
+                edit:
+                    view: '@MelisPlatformFrameworkSymfonyDemoToolLogic/btn_action_edit.html.twig'
+                delete:
+                    view: '@MelisPlatformFrameworkSymfonyDemoToolLogic/btn_action_delete.html.twig'

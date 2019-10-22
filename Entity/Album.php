@@ -3,6 +3,8 @@
 namespace MelisPlatformFrameworkSymfonyDemoToolLogic\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * @ORM\Table(name="melis_demo_album")
@@ -33,7 +35,7 @@ class Album
     private $alb_date;
 
 
-    public function getId(): ?int
+    public function getAlbId(): ?int
     {
         return $this->alb_id;
     }
@@ -43,7 +45,7 @@ class Album
         return $this->alb_name;
     }
 
-    public function setAlbName(string $alb_name): self
+    public function setAlbName(?string $alb_name): self
     {
         $this->alb_name = $alb_name;
 
@@ -55,7 +57,7 @@ class Album
         return $this->alb_song_num;
     }
 
-    public function setAlbSongNum(string $alb_song_num): self
+    public function setAlbSongNum(?string $alb_song_num): self
     {
         $this->alb_song_num = $alb_song_num;
 

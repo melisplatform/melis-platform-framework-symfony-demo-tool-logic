@@ -1,0 +1,26 @@
+{% block album_plugin %}
+    <h3>Album List</h3>
+    <p>
+        {% trans %} tool.album_table_desc {% endtrans %}
+    </p>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Song number</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for album in album_list %}
+            <tr>
+                <td>{{ album.getAlbId() }}</td>
+                <td>{{ album.getAlbName() }}</td>
+                <td>{{ album.getAlbSongNum() }}</td>
+                <td>{{ album.getAlbDate() }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

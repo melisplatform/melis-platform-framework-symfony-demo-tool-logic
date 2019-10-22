@@ -6,7 +6,30 @@
 
 list_route:
   path: /melis/symfony-list
-  controller: MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\MainController::list
+  controller: MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\AlbumController::getAlbumTool
+
+album_list:
+  path: /melis/album-list
+  controller: MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\AlbumController::getAlbumList
+
+#Get album by id
+create_album_form:
+  path: /melis/create-form/{id}
+  controller : MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\AlbumController::createAlbumForm
+  methods: GET|HEAD
+
+#Save
+save_album:
+  path: /melis/save-album/{id}
+  controller: MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\AlbumController::saveAlbum
+  defaults:   { id: 0 }
+  methods: POST
+
+#Delete
+delete_album:
+  path: /melis/delete-album
+  controller: MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\AlbumController::deleteAlbum
+  methods: POST
 
 #we used the same function in the controller
 #to ge the data for the plugin.
@@ -14,16 +37,4 @@ list_route:
 #since we need to access it in the front
 plugin_route:
   path: /symfony-plugin
-  controller: MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\MainController::getAlbums
-
-#Get album by id
-get_album_by_id:
-  path: /melis/get-album/{id}
-  controller : MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\MainController::getAlbumById
-  methods:    GET|HEAD
-
-#Save
-save_album:
-  path: /melis/save-album
-  controller: MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\MainController::saveAlbum
-  methods:    POST
+  controller: MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\AlbumController::getAlbumPlugin

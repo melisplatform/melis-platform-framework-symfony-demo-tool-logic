@@ -4,8 +4,10 @@ namespace MelisPlatformFrameworkSymfonyDemoToolLogic\Form\Type;
 
 use MelisPlatformFrameworkSymfonyDemoToolLogic\Entity\Album;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AlbumType extends AbstractType
 {
@@ -16,17 +18,20 @@ class AlbumType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('alb_name', null, [
+        $builder
+        ->add('alb_name', TextType::class, [
             'label' => 'Name',
             'attr' => [
                 'class' => 'form-control'
-            ]
-        ]);
-        $builder->add('alb_song_num', null, [
+            ],
+            'constraints' => new NotBlank()
+        ])
+        ->add('alb_song_num', null, [
             'label' => 'Song number',
             'attr' => [
                 'class' => 'form-control'
-            ]
+            ],
+            'constraints' => new NotBlank()
         ]);
     }
 

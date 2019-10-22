@@ -3,27 +3,25 @@
     <p>
         {% trans %} tool.album_table_desc {% endtrans %}
     </p>
-    <table class="table table-bordered table-striped">
-        <thead>
-        <tr>
-            <th>Album name</th>
-            <th>Album number</th>
-            <th>Album Date</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for album in album_list %}
-            <tr>
-                <td>{{ album.getAlbName() }}</td>
-                <td>{{ album.getAlbSongNum() }}</td>
-                <td>{{ album.getAlbDate() }}</td>
-                <td>
-                    <a href="#" data-albid="{{ album.getId() }}" class="btn btn-info btn_update"><i class="fa fa-pencil"></i></a>
-                    <a href="#" data-albid="{{ album.getId() }}" class="btn btn-danger btn_delete"><i class="fa fa-trash"></i></a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+
+{#    Create table using create_table helper#}
+    {{ create_table(
+        {
+            'id' : 'tableSymfonyDemoTool',
+            'class' : 'table table-striped table-primary dt-responsive nowrap',
+            'cellspacing' : '0',
+            'width' : '100%'
+        },
+        tableColumns
+        )|raw
+    }}
+
+{#    Initialize data table to make a pagination#}
+    <div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                {{ getDataTableConfiguration|raw }}
+            });
+        </script>
+    </div>
 {% endblock %}
