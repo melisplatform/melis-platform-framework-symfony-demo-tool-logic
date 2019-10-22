@@ -1,12 +1,7 @@
 {% block album_list %}
     <h3>Album List</h3>
     <p>
-        {% if translate %}
-            {% trans %} tool.album_table_desc {% endtrans %}
-        {% else %}
-            The table below shows the data fetched from the database using Symfony.<br/>
-            <code>$album = $this->getDoctrine()->getRepository(Album::class)->findAll();</code>
-        {% endif %}
+        {% trans %} tool.album_table_desc {% endtrans %}
     </p>
 
 {#    Create table using create_table helper#}
