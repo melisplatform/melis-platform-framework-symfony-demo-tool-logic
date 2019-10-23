@@ -17,6 +17,10 @@ use Symfony\Component\Serializer\Serializer;
 
 class AlbumController extends AbstractController
 {
+    /**
+     * Store all the parameters
+     * @var ParameterBagInterface
+     */
     protected $parameters;
 
     /**
@@ -114,12 +118,17 @@ class AlbumController extends AbstractController
     }
 
     /**
+     * Get album list
      * @param Request $request
      * @return JsonResponse
      * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
      */
     public function getAlbumList(Request $request)
     {
+        /**
+         * Prepare the serializer to convert
+         * Entity object to array
+         */
         $encoders = [new XmlEncoder(), new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
         $serializer = new Serializer($normalizers, $encoders);
@@ -162,15 +171,19 @@ class AlbumController extends AbstractController
             $tableData[$ctr]['DT_RowId'] = $tableData[$ctr]['albId'];
         }
 
+        //get total filtered record
+        $totalFilteredRecord = $serializer->normalize($repository->getTotalFilteredRecord());
+
         return new JsonResponse(array(
             'draw' => (int) $draw,
             'recordsTotal' => (int) $total,
-            'recordsFiltered' => (int) $total,
+            'recordsFiltered' => (int) count($totalFilteredRecord),
             'data' => $tableData,
         ));
     }
 
     /**
+     * Create album form
      * @param $id
      * @return Response
      */
@@ -342,20 +355,6 @@ class AlbumController extends AbstractController
             return $this->parameters->get('symfony_demo_album_table');
         }
         return '';
-    }
-
-    /**
-     * This will get the config needed for
-     * the datatable using the MelisCoreTool service
-     * @param $melisServices
-     * @return mixed
-     */
-    private function getTool($melisServices)
-    {
-        $tool = $melisServices->getService('MelisCoreTool');
-        $tool->setMelisToolKey('melisplatformframeworksymfonydemotool', 'symfony_demo_tool');
-
-        return $tool;
     }
 
     /**

@@ -15,6 +15,16 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class AlbumRepository extends ServiceEntityRepository
 {
+    /**
+     * Store total filtered record
+     * @var $totalFilteredRecord
+     */
+    protected $totalFilteredRecord;
+
+    /**
+     * AlbumRepository constructor.
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Album::class);
@@ -42,6 +52,9 @@ class AlbumRepository extends ServiceEntityRepository
         if(!empty($orderBy))
             $qb->orderBy("a.$orderBy", $order);
 
+        //set total filtered record without limit
+        $this->setTotalFilteredRecord($qb->getQuery()->getResult());
+
         if(!empty($offset))
             $qb->setFirstResult($offset);
 
@@ -64,5 +77,21 @@ class AlbumRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('a')->select("count(a.alb_id)");
         $query = $qb->getQuery();
         return $query->getSingleScalarResult();
+    }
+
+    /**
+     * @param $totalFilteredRecord
+     */
+    public function setTotalFilteredRecord($totalFilteredRecord)
+    {
+        $this->totalFilteredRecord = $totalFilteredRecord;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalFilteredRecord()
+    {
+        return $this->totalFilteredRecord;
     }
 }
