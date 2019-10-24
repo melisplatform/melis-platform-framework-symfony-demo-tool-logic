@@ -230,6 +230,7 @@ class AlbumController extends AbstractController
      */
     public function saveAlbum($id, Request $request): JsonResponse
     {
+        $itemId = null;
         $result = [
             'title' => 'Album',
             'success' => false,
@@ -243,8 +244,10 @@ class AlbumController extends AbstractController
                 $entityManager = $this->getDoctrine()->getManager();
                 if (empty($id)) {//create new album
                     $album = new Album();
+                    $typeCode = 'SYMFONY_DEMO_TOOL_SAVE';
                 } else {//update album
                     $album = $entityManager->getRepository(Album::class)->find($id);
+                    $typeCode = 'SYMFONY_DEMO_TOOL_UPDATE';
                     if (!$album) {
                         throw $this->createNotFoundException(
                             $translator->trans('tool.no_album_found') .' '. $id
@@ -260,13 +263,24 @@ class AlbumController extends AbstractController
                     $entityManager->persist($album);
                     // executes the queries
                     $entityManager->flush();
+                    //get id
+                    $itemId = $album->getAlbId();
 
-                    $result['message'] = $translator->trans('tool.album_successfully_saved');
+                    $result['message'] = (empty($id)) ? $translator->trans('tool.album_successfully_saved') : $translator->trans('tool.album_successfully_updated');
                     $result['success'] = true;
+                    //prepare params form logs and flash messenger
+                    $icon = 'glyphicon-info-sign';
                 }else{
-                    $result['message'] = $translator->trans('tool.unable_to_save_album');
+                    $result['message'] = (empty($id)) ? $translator->trans('tool.unable_to_save_album') : $translator->trans('tool.unable_to_update_album');
                     $result['errors'] = $this->getErrorsFromForm($form);
+                    //prepare params form logs and flash messenger
+                    $icon = 'glyphicon-warning-sign';
                 }
+
+                //add message notification
+                $this->symfonyService()->addToFlashMessenger($result['title'], $result['message'], $icon);
+                //save logs
+                $this->symfonyService()->saveLogs($result['title'], $result['message'], $result['success'], $typeCode, $itemId);
             }
         }catch (\Exception $ex){
             $result['message'] = $ex->getMessage();
@@ -283,6 +297,10 @@ class AlbumController extends AbstractController
      */
     public function deleteAlbum(Request $request): JsonResponse
     {
+        $icon = 'glyphicon-warning-sign';
+        $typeCode = 'SYMFONY_DEMO_TOOL_DELETE';
+        $id = $request->get('id', null);
+
         $translator = $this->get('translator');
 
         $result = [
@@ -292,14 +310,21 @@ class AlbumController extends AbstractController
         ];
         try {
             $entityManager = $this->getDoctrine()->getManager();
-            $album = $entityManager->getRepository(Album::class)->find($request->get('id'));
+            $album = $entityManager->getRepository(Album::class)->find($id);
             $entityManager->remove($album);
             $entityManager->flush();
             $result['message'] = $translator->trans('tool.album_successfully_deleted');
             $result['success'] = true;
+            $icon = 'glyphicon-info-sign';
         }catch (\Exception $ex){
             throw new \Exception($ex->getMessage());
         }
+
+        //add message notification
+        $this->symfonyService()->addToFlashMessenger($result['title'], $result['message'], $icon);
+        //save logs
+        $this->symfonyService()->saveLogs($result['title'], $result['message'], $result['success'], $typeCode, $id);
+
         return new JsonResponse($result);
     }
 
