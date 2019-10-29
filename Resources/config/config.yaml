@@ -7,14 +7,11 @@ melis_platform_framework_symfony_demo_tool_logic:
             ajaxCallback: ''
             filters:
                 left:
-                    limit:
-                        view: '@MelisPlatformFrameworkSymfonyDemoToolLogic/filter_limit.html.twig'
+                    show: l
                 center:
-                    search:
-                        view: '@MelisPlatformFrameworkSymfonyDemoToolLogic/filter_search.html.twig'
+                    search: f
                 right:
-                    refresh:
-                        view: '@MelisPlatformFrameworkSymfonyDemoToolLogic/filter_refresh.html.twig'
+                    refresh: '<a class="btn btn-default melis-refreshTable" data-toggle="tab" aria-expanded="true" title="Refresh"><i class="fa fa-refresh"></i></a>'
             columns:
                 albId:
                     text: 'Id'
@@ -42,7 +39,5 @@ melis_platform_framework_symfony_demo_tool_logic:
                     sortable: false
             searchables: ['alb_name', 'alb_song_num']
             actionButtons:
-                edit:
-                    view: '@MelisPlatformFrameworkSymfonyDemoToolLogic/btn_action_edit.html.twig'
-                delete:
-                    view: '@MelisPlatformFrameworkSymfonyDemoToolLogic/btn_action_delete.html.twig'
+                edit: '<button class="btn btn-success btn_update" title="Edit"><i class="fa fa-pencil"></i></button>'
+                delete: '<a class="btn btn-danger btn_delete" title="Delete"><i class="fa fa-times"> </i></a>'

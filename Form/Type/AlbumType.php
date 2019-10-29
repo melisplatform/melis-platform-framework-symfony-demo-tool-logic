@@ -24,14 +24,16 @@ class AlbumType extends AbstractType
             'attr' => [
                 'class' => 'form-control'
             ],
-            'constraints' => new NotBlank()
+            'constraints' => new NotBlank(),
+            'required' => true,
         ])
         ->add('alb_song_num', null, [
             'label' => 'Song number',
             'attr' => [
                 'class' => 'form-control'
             ],
-            'constraints' => new NotBlank()
+            'constraints' => new NotBlank(),
+            'required' => true,
         ]);
     }
 

@@ -15,12 +15,23 @@
         tableColumns
         )|raw
     }}
+{#    Create a modal that will allow us to update/create new album
+      We are using one modal for both update and create, we just
+      need to modify everything in the javascript to determine whether
+      we are going to update or create a record
+#}
+    {{ create_modal(
+        'symfonyDemoToolAlbumModal',
+        {'id': 'albumTabCreate'},
+        {'id':'btn-save-album'}
+    )|raw
+    }}
 
 {#    Initialize data table to make a pagination#}
     <div>
         <script type="text/javascript">
             $(document).ready(function() {
-                {{ getDataTableConfiguration|raw }}
+                melisHelper.melisInitDataTable({{ symfonyTableConfig|json_encode()|raw }});
             });
         </script>
     </div>

@@ -41,49 +41,40 @@ class AlbumController extends AbstractController
     public function getAlbumTool(): Response
     {
         try {
-            try {
-                /**
-                 * Get the Melis Platform services registered in zend
-                 * service manager
-                 */
-                $melisServices = $this->get('melis_platform.service_manager');
-                /**
-                 * Get the languages on melis back office
-                 */
-                $melisServices = $melisServices->getService('MelisCoreTableLang');
-                $melisCorelangList = $melisServices->fetchAll()->toArray();
+            /**
+             * Get the languages on melis back office
+             */
+            $melisCoreTableLang = $this->melisServiceManager()->getService('MelisCoreTableLang');
+            $melisCorelangList = $melisCoreTableLang->fetchAll()->toArray();
 
-                /**
-                 * Get the album list using
-                 * the album entity
-                 */
-                $album = $this->getDoctrine()
-                    ->getRepository(Album::class)
-                    ->findAll();
+            /**
+             * Get the album list using
+             * the album entity
+             */
+            $album = $this->getDoctrine()
+                ->getRepository(Album::class)
+                ->findAll();
 
-                /**
-                 * get table columns text
-                 */
-                $columns = [];
-                if(!empty($this->getAlbumTableColumns())){
-                    foreach($this->getAlbumTableColumns() as $key => $col){
-                        $columns[$key] = $col['text'];
-                    }
+            /**
+             * get table columns text
+             */
+            $columns = [];
+            if(!empty($this->getAlbumTableConfigColumns())){
+                foreach($this->getAlbumTableConfigColumns() as $key => $col){
+                    $columns[$key] = $col['text'];
                 }
-                //add the action column
-                $columns['action'] = 'Action';
-                $view = $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/lists.html.twig',
-                    [
-                        'album_list' => $album,
-                        'lang_core_list' => $melisCorelangList,
-                        'tableColumns' => $columns,
-                        'getDataTableConfiguration' => $this->symfonyService()->getDataTableConfiguration($this->getAlbumTable())
-                    ])->getContent();
-
-                return new Response($view);
-            }catch (\Exception $ex){
-                exit($ex->getMessage());
             }
+            //add the action column
+            $columns['action'] = 'Action';
+            $view = $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/lists.html.twig',
+                [
+                    'album_list' => $album,
+                    'lang_core_list' => $melisCorelangList,
+                    'tableColumns' => $columns,
+                    'symfonyTableConfig' => $this->getAlbumTableConfig(),
+                ])->getContent();
+
+            return new Response($view);
         }catch (\Exception $ex){
             exit($ex->getMessage());
         }
@@ -141,7 +132,7 @@ class AlbumController extends AbstractController
         $sortOrder = $request->get('order', 'ASC');
         $sortOrder = $sortOrder[0]['dir'];
         //get column name to sort
-        $colId = array_keys($this->getAlbumTableColumns());
+        $colId = array_keys($this->getAlbumTableConfigColumns());
         $selCol = $request->get('order', 'alb_id');
         $selCol = $colId[$selCol[0]['column']];
         //convert column name(ex. albName) to exact field name in the table(ex. alb_name)
@@ -210,6 +201,9 @@ class AlbumController extends AbstractController
                 $album = new Album();
             }
 
+            /**
+             * Create album form
+             */
             $form = $this->createForm(AlbumType::class, $album, [
                 'attr' => [
                     'id' => 'album_form'
@@ -278,9 +272,9 @@ class AlbumController extends AbstractController
                 }
 
                 //add message notification
-                $this->symfonyService()->addToFlashMessenger($result['title'], $result['message'], $icon);
+                $this->addToFlashMessenger($result['title'], $result['message'], $icon);
                 //save logs
-                $this->symfonyService()->saveLogs($result['title'], $result['message'], $result['success'], $typeCode, $itemId);
+                $this->saveLogs($result['title'], $result['message'], $result['success'], $typeCode, $itemId);
             }
         }catch (\Exception $ex){
             $result['message'] = $ex->getMessage();
@@ -321,9 +315,9 @@ class AlbumController extends AbstractController
         }
 
         //add message notification
-        $this->symfonyService()->addToFlashMessenger($result['title'], $result['message'], $icon);
+        $this->addToFlashMessenger($result['title'], $result['message'], $icon);
         //save logs
-        $this->symfonyService()->saveLogs($result['title'], $result['message'], $result['success'], $typeCode, $id);
+        $this->saveLogs($result['title'], $result['message'], $result['success'], $typeCode, $id);
 
         return new JsonResponse($result);
     }
@@ -341,7 +335,8 @@ class AlbumController extends AbstractController
         foreach ($form->all() as $childForm) {
             if ($childForm instanceof FormInterface) {
                 if ($childErrors = $this->getErrorsFromForm($childForm)) {
-                    $errors[$childForm->getName()] = $childErrors;
+                    $fieldLabel = $childForm->getConfig()->getOption('label');
+                    $errors[$fieldLabel] = $childErrors;
                 }
             }
         }
@@ -350,12 +345,39 @@ class AlbumController extends AbstractController
     }
 
     /**
+     * Add logs to notification
+     * @param $title
+     * @param $message
+     * @param string $icon
+     */
+    private function addToFlashMessenger($title, $message, $icon = 'glyphicon-info-sign')
+    {
+        $icon = 'glyphicon '.$icon;
+        $flashMessenger = $this->melisServiceManager()->getService('MelisCoreFlashMessenger');
+        $flashMessenger->addToFlashMessenger($title, $message, $icon);
+    }
+
+    /**
+     * Save logs
+     * @param $title
+     * @param $message
+     * @param $success
+     * @param $typeCode
+     * @param $itemId
+     */
+    private function saveLogs($title, $message, $success, $typeCode, $itemId)
+    {
+        $logs = $this->melisServiceManager()->getService('MelisCoreLogService');
+        $logs->saveLog($title, $message, $success, $typeCode, $itemId);
+    }
+
+    /**
      * @return array|mixed
      */
     private function getAlbumSearchableColumns()
     {
-        if(!empty($this->getAlbumTable()['searchables'])){
-            return $this->getAlbumTable()['searchables'];
+        if(!empty($this->getAlbumTableConfig()['searchables'])){
+            return $this->getAlbumTableConfig()['searchables'];
         }
         return [];
     }
@@ -363,10 +385,10 @@ class AlbumController extends AbstractController
     /**
      * @return array
      */
-    private function getAlbumTableColumns()
+    private function getAlbumTableConfigColumns()
     {
-        if(!empty($this->getAlbumTable()['columns'])){
-            return $this->getAlbumTable()['columns'];
+        if(!empty($this->getAlbumTableConfig()['columns'])){
+            return $this->getAlbumTableConfig()['columns'];
         }
         return [];
     }
@@ -374,7 +396,7 @@ class AlbumController extends AbstractController
     /**
      * @return mixed|string
      */
-    private function getAlbumTable()
+    private function getAlbumTableConfig()
     {
         if(!empty($this->parameters->get('symfony_demo_album_table'))){
             return $this->parameters->get('symfony_demo_album_table');
@@ -383,11 +405,11 @@ class AlbumController extends AbstractController
     }
 
     /**
-     * Get service
+     * Get Melis Service Manager
      * @return object
      */
-    private function symfonyService()
+    private function melisServiceManager()
     {
-        return $this->get('melis_platform_framework.symfony_service');
+        return $this->get('melis_platform.service_manager');
     }
 }

@@ -12,10 +12,11 @@ album_list:
   path: /melis/album-list
   controller: MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\AlbumController::getAlbumList
 
-#Get album by id
+#Get form - id is not null, the form will be filled with data based on given id
 create_album_form:
-  path: /melis/create-form/{id}
+  path: /melis/get-form/{id}
   controller : MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\AlbumController::createAlbumForm
+  defaults:   { id: 0 }
   methods: GET|HEAD
 
 #Save
