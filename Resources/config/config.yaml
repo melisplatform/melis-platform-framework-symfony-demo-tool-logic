@@ -8,10 +8,14 @@ twig:
 melis_platform_framework_symfony_demo_tool_logic:
     table:
         album_table:
-            target: '#tableSymfonyDemoTool'
             ajaxUrl: '/melis/album-list'
             dataFunction: ''
             ajaxCallback: ''
+            attributes:
+                id: 'tableSymfonyDemoTool'
+                class: 'table table-striped table-primary dt-responsive nowrap'
+                cellspacing: '0'
+                width: '100%'
             filters:
                 left:
                     show: l

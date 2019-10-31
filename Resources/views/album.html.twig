@@ -4,17 +4,9 @@
         {% trans %} tool.album_table_desc {% endtrans %}
     </p>
 
-{#    Create table using create_table helper#}
-    {{ create_table(
-        {
-            'id' : 'tableSymfonyDemoTool',
-            'class' : 'table table-striped table-primary dt-responsive nowrap',
-            'cellspacing' : '0',
-            'width' : '100%'
-        },
-        tableColumns
-        )|raw
-    }}
+{#    Create table using melis helper#}
+    {{ melis_helper('melisdatatable', 'createTable', symfonyTableConfig)|raw }}
+
 {#    Create a modal that will allow us to update/create new album
       We are using one modal for both update and create, we just
       need to modify everything in the javascript to determine whether
@@ -25,13 +17,4 @@
         {'id':'btn-save-album'}
     )|raw
     }}
-
-{#    Initialize data table to make a pagination#}
-    <div>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                melisHelper.melisInitDataTable({{ symfonyTableConfig|json_encode()|raw }});
-            });
-        </script>
-    </div>
 {% endblock %}

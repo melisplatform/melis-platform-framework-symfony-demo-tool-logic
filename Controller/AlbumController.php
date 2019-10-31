@@ -55,22 +55,11 @@ class AlbumController extends AbstractController
                 ->getRepository(Album::class)
                 ->findAll();
 
-            /**
-             * get table columns text
-             */
-            $columns = [];
-            if(!empty($this->getAlbumTableConfigColumns())){
-                foreach($this->getAlbumTableConfigColumns() as $key => $col){
-                    $columns[$key] = $col['text'];
-                }
-            }
             //add the action column
-            $columns['action'] = 'Action';
             $view = $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/lists.html.twig',
                 [
                     'album_list' => $album,
                     'lang_core_list' => $melisCorelangList,
-                    'tableColumns' => $columns,
                     'symfonyTableConfig' => $this->getAlbumTableConfig(),
                 ])->getContent();
 
@@ -376,6 +365,7 @@ class AlbumController extends AbstractController
     }
 
     /**
+     * Get searchable columns
      * @return array|mixed
      */
     private function getAlbumSearchableColumns()
@@ -387,6 +377,7 @@ class AlbumController extends AbstractController
     }
 
     /**
+     * Get table columns
      * @return array
      */
     private function getAlbumTableConfigColumns()
@@ -398,14 +389,36 @@ class AlbumController extends AbstractController
     }
 
     /**
+     * Get table config
      * @return mixed|string
      */
     private function getAlbumTableConfig()
     {
+        $translator = $this->get('translator');
+        $tableConfig = [];
         if(!empty($this->parameters->get('symfony_demo_album_table'))){
-            return $this->parameters->get('symfony_demo_album_table');
+            $tableConfig = $this->parameters->get('symfony_demo_album_table');
+            $tableConfig = $this->translateConfig($tableConfig, $translator);
         }
-        return '';
+        return $tableConfig;
+    }
+
+    /**
+     * Translate some text in the config
+     * @param $config
+     * @param $translator
+     * @return mixed
+     */
+    private function translateConfig($config, $translator)
+    {
+        foreach($config as $key => $value){
+            if(is_array($value)){
+                $config[$key] = $this->translateConfig($value, $translator);
+            }else{
+                $config[$key] = $translator->trans($value);
+            }
+        }
+        return $config;
     }
 
     /**
