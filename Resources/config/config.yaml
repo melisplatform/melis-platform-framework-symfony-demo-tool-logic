@@ -1,3 +1,10 @@
+#Change our twig form themes to Bootstrap 3
+#since melis platform is also using
+#Bootstrap 3 to make it the same
+twig:
+    form_themes: ['bootstrap_3_layout.html.twig']
+
+#Register some config for our demo tool
 melis_platform_framework_symfony_demo_tool_logic:
     table:
         album_table:
@@ -14,30 +21,30 @@ melis_platform_framework_symfony_demo_tool_logic:
                     refresh: '<a class="btn btn-default melis-refreshTable" data-toggle="tab" aria-expanded="true" title="Refresh"><i class="fa fa-refresh"></i></a>'
             columns:
                 albId:
-                    text: 'Id'
+                    text: 'tool.album_table_column_id'
                     css:
                         width: '5%'
                         padding-right: 0
                     sortable: false
                 albName:
-                    text: 'Name'
+                    text: 'tool.album_table_column_name'
                     css:
                         width: '50%'
                         padding-right: 0
                     sortable: false
                 albSongNum:
-                    text: 'Song number'
+                    text: 'tool.album_table_column_song_no'
                     css:
                         width: '25%'
                         padding-right: 0
                     sortable: false
                 albDate:
-                    text: 'Date'
+                    text: 'tool.album_table_column_date'
                     css:
                         width: '25%'
                         padding-right: 0
                     sortable: false
             searchables: ['alb_name', 'alb_song_num']
             actionButtons:
-                edit: '<button class="btn btn-success btn_update" title="Edit"><i class="fa fa-pencil"></i></button>'
-                delete: '<a class="btn btn-danger btn_delete" title="Delete"><i class="fa fa-times"> </i></a>'
+                edit: '<button class="btn btn-success" id="btn-update-album" title="Edit"><i class="fa fa-pencil"></i></button>'
+                delete: '<a class="btn btn-danger" id="btn-delete-album" title="Delete"><i class="fa fa-times"> </i></a>'

@@ -4,6 +4,13 @@ tool.album_table_desc: Le tableau ci-dessous affiche les données extraites de l
                       <code>$album = $this->getDoctrine()->getRepository(Album::class)->findAll();</code>
 tool.lang_table_desc: Le tableau ci-dessous affiche les données extraites des services de Melis Platform en utilisant Symfony.<br/>
                       <code>$languages = $this->get('melis_platform.service_manager')->getService('MelisCoreTableLang')->fetchAll();</code>
+#Album Table column
+tool.album_table_column_id: Id
+tool.album_table_column_name: Name
+tool.album_table_column_song_no: Song number
+tool.album_table_column_date: Date
+
+#Messages
 tool.no_album_found: No album found for id
 tool.unable_to_save_album: Unable to save album.
 tool.unable_to_update_album: Unable to update album.

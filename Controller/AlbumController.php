@@ -238,9 +238,11 @@ class AlbumController extends AbstractController
                 $entityManager = $this->getDoctrine()->getManager();
                 if (empty($id)) {//create new album
                     $album = new Album();
+                    //set typeCode form logs
                     $typeCode = 'SYMFONY_DEMO_TOOL_SAVE';
                 } else {//update album
                     $album = $entityManager->getRepository(Album::class)->find($id);
+                    //set typeCode form logs
                     $typeCode = 'SYMFONY_DEMO_TOOL_UPDATE';
                     if (!$album) {
                         throw $this->createNotFoundException(
@@ -262,12 +264,12 @@ class AlbumController extends AbstractController
 
                     $result['message'] = (empty($id)) ? $translator->trans('tool.album_successfully_saved') : $translator->trans('tool.album_successfully_updated');
                     $result['success'] = true;
-                    //prepare params form logs and flash messenger
+                    //set icon for flash messenger
                     $icon = 'glyphicon-info-sign';
                 }else{
                     $result['message'] = (empty($id)) ? $translator->trans('tool.unable_to_save_album') : $translator->trans('tool.unable_to_update_album');
                     $result['errors'] = $this->getErrorsFromForm($form);
-                    //prepare params form logs and flash messenger
+                    //set icon for flash messenger
                     $icon = 'glyphicon-warning-sign';
                 }
 
@@ -323,6 +325,7 @@ class AlbumController extends AbstractController
     }
 
     /**
+     * Get form errors
      * @param FormInterface $form
      * @return array
      */
@@ -335,8 +338,9 @@ class AlbumController extends AbstractController
         foreach ($form->all() as $childForm) {
             if ($childForm instanceof FormInterface) {
                 if ($childErrors = $this->getErrorsFromForm($childForm)) {
+                    $errMessage = $childErrors[0] ?? null;
                     $fieldLabel = $childForm->getConfig()->getOption('label');
-                    $errors[$fieldLabel] = $childErrors;
+                    $errors[$childForm->getName()] = ['error_message' => $errMessage, 'label' => $fieldLabel];
                 }
             }
         }

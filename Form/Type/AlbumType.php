@@ -38,6 +38,7 @@ class AlbumType extends AbstractType
     }
 
     /**
+     * Set form default value
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
@@ -45,5 +46,17 @@ class AlbumType extends AbstractType
         $resolver->setDefaults([
            'data_class' => Album::class
         ]);
+    }
+
+    /**
+     * Remove the form type name
+     * so that we can use some of the
+     * melis javascript helper and tool
+     *
+     * @return string|null
+     */
+    public function getBlockPrefix()
+    {
+        return null;
     }
 }
