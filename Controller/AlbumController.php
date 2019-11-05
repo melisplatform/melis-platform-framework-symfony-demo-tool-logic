@@ -320,6 +320,7 @@ class AlbumController extends AbstractController
      */
     private function getErrorsFromForm(FormInterface $form)
     {
+        $translator = $this->get('translator');
         $errors = array();
         foreach ($form->getErrors() as $error) {
             $errors[] = $error->getMessage();
@@ -329,6 +330,7 @@ class AlbumController extends AbstractController
                 if ($childErrors = $this->getErrorsFromForm($childForm)) {
                     $errMessage = $childErrors[0] ?? null;
                     $fieldLabel = $childForm->getConfig()->getOption('label');
+                    $fieldLabel = $translator->trans($fieldLabel);
                     $errors[$childForm->getName()] = ['error_message' => $errMessage, 'label' => $fieldLabel];
                 }
             }

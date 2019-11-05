@@ -4,17 +4,18 @@ tool.album_table_desc: The table below shows the data fetched from the database 
                        <code>$album = $this->getDoctrine()->getRepository(Album::class)->findAll();</code>
 tool.lang_table_desc: The table below shows the data fetched from Melis Platform Services using Symfony.<br/>
                       <code>$languages = $this->get('melis_platform.service_manager')->getService('MelisCoreTableLang')->fetchAll();</code>
+tool.add_album: Add Album
 #Album Table column
-tool.album_table_column_id: Id
+tool.album_table_column_id: ID
 tool.album_table_column_name: Name
-tool.album_table_column_song_no: Song number
+tool.album_table_column_song_no: Songs
 tool.album_table_column_date: Date
 
 #Messages
-tool.no_album_found: No album found for id
-tool.unable_to_save_album: Unable to save album.
-tool.unable_to_update_album: Unable to update album.
+tool.no_album_found: No album found with ID
+tool.unable_to_save_album: Unable to save the album.
+tool.unable_to_update_album: Unable to update the album.
 tool.album_successfully_saved: Album successfully saved.
 tool.album_successfully_updated: Album successfully updated.
-tool.cannot_delete_album: Cannot delete album.
+tool.cannot_delete_album: Cannot delete the album.
 tool.album_successfully_deleted: Album successfully deleted.

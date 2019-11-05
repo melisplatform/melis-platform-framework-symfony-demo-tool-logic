@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AlbumType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -20,7 +19,7 @@ class AlbumType extends AbstractType
     {
         $builder
         ->add('alb_name', TextType::class, [
-            'label' => 'Name',
+            'label' => 'tool.album_table_column_name',
             'attr' => [
                 'class' => 'form-control'
             ],
@@ -28,7 +27,7 @@ class AlbumType extends AbstractType
             'required' => true,
         ])
         ->add('alb_song_num', null, [
-            'label' => 'Song number',
+            'label' => 'tool.album_table_column_song_no',
             'attr' => [
                 'class' => 'form-control'
             ],
