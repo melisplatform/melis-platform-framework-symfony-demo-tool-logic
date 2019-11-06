@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Positive;
 
 class AlbumType extends AbstractType
 {
@@ -31,7 +32,10 @@ class AlbumType extends AbstractType
             'attr' => [
                 'class' => 'form-control'
             ],
-            'constraints' => new NotBlank(),
+            'constraints' => [
+                new NotBlank(),
+                new Positive(['message' => 'tool.song_number_int_only'])
+            ],
             'required' => true,
         ]);
     }
