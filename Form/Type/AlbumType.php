@@ -20,7 +20,7 @@ class AlbumType extends AbstractType
     {
         $builder
         ->add('alb_name', TextType::class, [
-            'label' => 'tool.album_table_column_name',
+            'label' => 'tool_album_table_column_name',
             'attr' => [
                 'class' => 'form-control'
             ],
@@ -28,13 +28,13 @@ class AlbumType extends AbstractType
             'required' => true,
         ])
         ->add('alb_song_num', null, [
-            'label' => 'tool.album_table_column_song_no',
+            'label' => 'tool_album_table_column_song_no',
             'attr' => [
                 'class' => 'form-control'
             ],
             'constraints' => [
                 new NotBlank(),
-                new Positive(['message' => 'tool.song_number_int_only'])
+                new Positive(['message' => 'tool_song_number_int_only'])
             ],
             'required' => true,
         ]);

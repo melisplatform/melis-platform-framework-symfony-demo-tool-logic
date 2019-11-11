@@ -25,25 +25,25 @@ melis_platform_framework_symfony_demo_tool_logic:
                     refresh: '<a class="btn btn-default melis-refreshTable" data-toggle="tab" aria-expanded="true" title="Refresh"><i class="fa fa-refresh"></i></a>'
             columns:
                 albId:
-                    text: 'tool.album_table_column_id'
+                    text: 'tool_album_table_column_id'
                     css:
                         width: '5%'
                         padding-right: 0
                     sortable: false
                 albName:
-                    text: 'tool.album_table_column_name'
+                    text: 'tool_album_table_column_name'
                     css:
                         width: '50%'
                         padding-right: 0
                     sortable: false
                 albSongNum:
-                    text: 'tool.album_table_column_song_no'
+                    text: 'tool_album_table_column_song_no'
                     css:
                         width: '25%'
                         padding-right: 0
                     sortable: false
                 albDate:
-                    text: 'tool.album_table_column_date'
+                    text: 'tool_album_table_column_date'
                     css:
                         width: '25%'
                         padding-right: 0

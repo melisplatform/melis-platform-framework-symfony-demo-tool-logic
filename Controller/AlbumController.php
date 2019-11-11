@@ -235,7 +235,7 @@ class AlbumController extends AbstractController
                     $typeCode = 'SYMFONY_DEMO_TOOL_UPDATE';
                     if (!$album) {
                         throw $this->createNotFoundException(
-                            $translator->trans('tool.no_album_found') .' '. $id
+                            $translator->trans('tool_no_album_found') .' '. $id
                         );
                     }
                 }
@@ -251,12 +251,12 @@ class AlbumController extends AbstractController
                     //get id
                     $itemId = $album->getAlbId();
 
-                    $result['message'] = (empty($id)) ? $translator->trans('tool.album_successfully_saved') : $translator->trans('tool.album_successfully_updated');
+                    $result['message'] = (empty($id)) ? $translator->trans('tool_album_successfully_saved') : $translator->trans('tool_album_successfully_updated');
                     $result['success'] = true;
                     //set icon for flash messenger
                     $icon = 'glyphicon-info-sign';
                 }else{
-                    $result['message'] = (empty($id)) ? $translator->trans('tool.unable_to_save_album') : $translator->trans('tool.unable_to_update_album');
+                    $result['message'] = (empty($id)) ? $translator->trans('tool_unable_to_save_album') : $translator->trans('tool_unable_to_update_album');
                     $result['errors'] = $this->getErrorsFromForm($form);
                     //set icon for flash messenger
                     $icon = 'glyphicon-warning-sign';
@@ -291,14 +291,14 @@ class AlbumController extends AbstractController
         $result = [
             'title' => 'Album',
             'success' => false,
-            'message' => $translator->trans('tool.cannot_delete_album'),
+            'message' => $translator->trans('tool_cannot_delete_album'),
         ];
         try {
             $entityManager = $this->getDoctrine()->getManager();
             $album = $entityManager->getRepository(Album::class)->find($id);
             $entityManager->remove($album);
             $entityManager->flush();
-            $result['message'] = $translator->trans('tool.album_successfully_deleted');
+            $result['message'] = $translator->trans('tool_album_successfully_deleted');
             $result['success'] = true;
             $icon = 'glyphicon-info-sign';
         }catch (\Exception $ex){
