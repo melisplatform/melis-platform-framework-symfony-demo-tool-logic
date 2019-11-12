@@ -11,7 +11,7 @@ tool_add_album: Ajouter un Album
 tool_update_album: Mettre a jour
 tool_confirm_modal_yes: Oui
 tool_confirm_modal_no: Annuler
-tool_confirm_modal_title: Delete Album
+tool_confirm_modal_title: Supprimer la album
 tool_confirm_modal_message: Etes-vous sûr de vouloir supprimer cette album?
 #Album Table column
 tool_album_table_column_id: ID
