@@ -1,11 +1,14 @@
 #Change our twig form themes to Bootstrap 3
 #since melis platform is also using
-#Bootstrap 3 to make it the same
+#Bootstrap 3 to make it the same. Also,
+#we used our custom template for label
+#to include tooltip beside the label
 twig:
-    form_themes: ['bootstrap_3_layout.html.twig']
+    form_themes: ['bootstrap_3_layout.html.twig', '@MelisPlatformFrameworkSymfony/Form/form_label_with_tooltip_template.html.twig']
 
-#Register some config for our demo tool
+#Register some config for demo tool
 melis_platform_framework_symfony_demo_tool_logic:
+    #Create config for table
     table:
         album_table:
             ajaxUrl: '/melis/album-list'

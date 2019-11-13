@@ -170,6 +170,7 @@ class AlbumController extends AbstractController
     public function createAlbumForm($id)
     {
         try{
+            $translator = $this->get('translator');
             /**
              * If id is not empty,
              * then we retrieve the data by id and
@@ -183,7 +184,7 @@ class AlbumController extends AbstractController
 
                 if (!$album) {
                     throw $this->createNotFoundException(
-                        'No album found for id ' . $id
+                        $translator->trans('tool_no_album_found').' '. $id
                     );
                 }
             }else{

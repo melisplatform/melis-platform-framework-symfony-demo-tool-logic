@@ -1,9 +1,7 @@
 tool_title: Un embryon d'outil fait en Symfony4
 tool_description: Cet outil a pour but de montrer comment utiliser le framework Symfony4 à l'intérieur de Melis Platform, et ne pas être bloqué en ZF.
-tool_album_table_desc: Le tableau ci-dessous affiche les données extraites de la base de données en utilisant Symfony.<br/>
-                      <code>$album = $this->getDoctrine()->getRepository(Album::class)->findAll();</code>
-tool_lang_table_desc: Le tableau ci-dessous affiche les données extraites des services de Melis Platform en utilisant Symfony.<br/>
-                      <code>$languages = $this->get('melis_platform.service_manager')->getService('MelisCoreTableLang')->fetchAll();</code>
+tool_album_table_desc: Le tableau ci-dessous affiche les données extraites de la base de données en utilisant Symfony.
+tool_lang_table_desc: Le tableau ci-dessous affiche les données extraites des services de Melis Platform en utilisant Symfony.
 tool_album_list: Liste des albums
 tool_language_list: Liste des langages du BO
 
@@ -18,6 +16,8 @@ tool_album_table_column_id: ID
 tool_album_table_column_name: Nom
 tool_album_table_column_song_no: Chansons
 tool_album_table_column_date: Date
+tool_album_table_column_name_tooltip: Nom de l'album
+tool_album_table_column_song_no_tooltip: Nombre de chansons
 
 #Messages
 tool_no_album_found: Aucun album trouvé avec l'ID

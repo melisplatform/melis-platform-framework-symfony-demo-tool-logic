@@ -21,16 +21,18 @@ class AlbumType extends AbstractType
         $builder
         ->add('alb_name', TextType::class, [
             'label' => 'tool_album_table_column_name',
-            'attr' => [
-                'class' => 'form-control'
+            'label_attr' => [
+                //add tooltip beside the label
+                'label_tooltip' => 'tool_album_table_column_name_tooltip'
             ],
             'constraints' => new NotBlank(),
             'required' => true,
         ])
         ->add('alb_song_num', null, [
             'label' => 'tool_album_table_column_song_no',
-            'attr' => [
-                'class' => 'form-control'
+            'label_attr' => [
+                //add tooltip beside the label
+                'label_tooltip' => 'tool_album_table_column_song_no_tooltip'
             ],
             'constraints' => [
                 new NotBlank(),
