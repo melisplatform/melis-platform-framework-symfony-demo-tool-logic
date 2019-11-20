@@ -1,0 +1,57 @@
+#Change our twig form themes to Bootstrap 3
+#since melis platform is also using
+#Bootstrap 3 to make it the same. Also,
+#we used our custom template for label
+#to include tooltip beside the label
+twig:
+    form_themes: ['bootstrap_3_layout.html.twig', '@MelisPlatformFrameworkSymfony/Form/form_label_with_tooltip_template.html.twig']
+
+#Register some config for demo tool
+melis_platform_framework_symfony_demo_tool_logic:
+    #Create config for table
+    table:
+        album_table:
+            ajaxUrl: '/melis/album-list'
+            dataFunction: ''
+            ajaxCallback: ''
+            attributes:
+                id: 'tableSymfonyDemoTool'
+                class: 'table table-striped table-primary dt-responsive nowrap'
+                cellspacing: '0'
+                width: '100%'
+            filters:
+                left:
+                    show: l
+                center:
+                    search: f
+                right:
+                    refresh: '<a class="btn btn-default melis-refreshTable" data-toggle="tab" aria-expanded="true" title="Refresh"><i class="fa fa-refresh"></i></a>'
+            columns:
+                albId:
+                    text: 'tool_album_table_column_id'
+                    css:
+                        width: '5%'
+                        padding-right: 0
+                    sortable: false
+                albName:
+                    text: 'tool_album_table_column_name'
+                    css:
+                        width: '50%'
+                        padding-right: 0
+                    sortable: false
+                albSongNum:
+                    text: 'tool_album_table_column_song_no'
+                    css:
+                        width: '25%'
+                        padding-right: 0
+                    sortable: false
+                albDate:
+                    text: 'tool_album_table_column_date'
+                    css:
+                        width: '25%'
+                        padding-right: 0
+                    sortable: false
+            searchables: ['alb_name', 'alb_song_num']
+            actionButtons:
+                edit: '<button class="btn btn-success" id="btn-update-album" title="Edit"><i class="fa fa-pencil"></i></button>'
+                delete: '<a class="btn btn-danger" id="btn-delete-album" title="Delete"><i class="fa fa-times"> </i></a>'

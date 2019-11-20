@@ -1,29 +1,20 @@
 {% block album_list %}
-    <h3>Album List</h3>
+    <h3>{% trans %} tool_album_list {% endtrans %}</h3>
     <p>
-        {% if translate %}
-            {% trans %} tool.album_table_desc {% endtrans %}
-        {% else %}
-            The table below shows the data fetched from the database using Symfony.<br/>
-            <code>$album = $this->getDoctrine()->getRepository(Album::class)->findAll();</code>
-        {% endif %}
+        {% trans %} tool_album_table_desc {% endtrans %}
     </p>
-    <table class="table table-bordered table-striped">
-        <thead>
-        <tr>
-            <th>Album name</th>
-            <th>Album number</th>
-            <th>Album Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for album in album_list %}
-            <tr>
-                <td>{{ album.getAlbName() }}</td>
-                <td>{{ album.getAlbSongNum() }}</td>
-                <td>{{ album.getAlbDate() }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+
+{#    Create table using melis helper#}
+    {{ melis_helper('melisdatatable', 'createTable', symfonyTableConfig)|raw }}
+
+{#    Create a modal that will allow us to update/create new album
+      We are using one modal for both update and create, we just
+      need to modify everything in the javascript to determine whether
+      we are going to update or create a record
+#}
+    {{ create_modal(
+        {'id': 'symfonyDemoToolAlbumModal'},
+        {'id':'btn-save-album'}
+    )|raw
+    }}
 {% endblock %}
