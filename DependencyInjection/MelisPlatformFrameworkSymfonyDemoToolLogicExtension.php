@@ -17,8 +17,6 @@ class MelisPlatformFrameworkSymfonyDemoToolLogicExtension extends Extension impl
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
         /**
          * Load the bundle services
          */
@@ -29,9 +27,16 @@ class MelisPlatformFrameworkSymfonyDemoToolLogicExtension extends Extension impl
         $loader->load('services.yaml');
 
         /**
-         * Make a parameter to access the table config
+         * Make a parameter to access the config
          */
-        $container->setParameter('symfony_demo_album_table', $config['table']['album_table']);
+        foreach($configs as $config){
+            if(!empty($config)){
+                if(!empty($config['table']))
+                    $container->setParameter('symfony_demo_album_table', $config['table']['album_table']);
+                if(!empty($config['modal']))
+                    $container->setParameter('symfony_demo_album_modal', $config['modal']['album_modal']);
+            }
+        }
     }
 
     /**

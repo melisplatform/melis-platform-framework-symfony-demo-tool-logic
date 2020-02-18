@@ -37,15 +37,6 @@ return [
 ```
 Don't forget to activate also the MelisPlatformFrameworkSymfonyBundle class since this bundle requires it.
 
-### Routes
-Since this bundle has its own routes, we need to include it inside Symfony application for Symfony to recognize it.
-So we just need to include the bundle's route inside Symfony application (most likely in routes.yaml file if Symfony uses yaml as extension).
-```
-melis_platform:
-  resource: "@MelisPlatformFrameworkSymfonyDemoToolLogicBundle/Resources/config/routing.yaml"
-  prefix:   /
-``` 
-
 ## Authors
 
 * **Melis Technology** - [www.melistechnology.com](https://www.melistechnology.com/)

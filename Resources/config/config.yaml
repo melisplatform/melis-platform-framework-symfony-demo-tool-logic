@@ -55,3 +55,19 @@ melis_platform_framework_symfony_demo_tool_logic:
             actionButtons:
                 edit: '<button class="btn btn-success" id="btn-update-album" title="Edit"><i class="fa fa-pencil"></i></button>'
                 delete: '<a class="btn btn-danger" id="btn-delete-album" title="Delete"><i class="fa fa-times"> </i></a>'
+
+    modal:
+        album_modal:
+            id: symfonyDemoToolAlbumModal
+            btnSubmitText: tool_save_album
+            btnSubmitId: btn-save-album
+            tabs:
+                tab_properties:
+                    title: Properties
+                    content: ''
+                    class: 'glyphicons plus'
+                    form:
+                        form_id: album_form
+                        entity_class_name: MelisPlatformFrameworkSymfonyDemoToolLogic\Entity\Album
+                        form_type_class_name: MelisPlatformFrameworkSymfonyDemoToolLogic\Form\Type\AlbumType
+                        form_view_file: '@MelisPlatformFrameworkSymfonyDemoToolLogic/form.html.twig'

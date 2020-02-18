@@ -60,7 +60,8 @@ class AlbumController extends AbstractController
                 [
                     'album_list' => $album,
                     'lang_core_list' => $melisCorelangList,
-                    'symfonyTableConfig' => $this->getAlbumTableConfig(),
+                    "tableConfig" => $this->getAlbumTableConfig(),
+                    "modalConfig" => $this->getAlbumModalConfig()
                 ])->getContent();
 
             return new Response($view);
@@ -171,36 +172,47 @@ class AlbumController extends AbstractController
     {
         try{
             $translator = $this->get('translator');
-            /**
-             * If id is not empty,
-             * then we retrieve the data by id and
-             * pass it data to form
-             * else just create the form
-             */
-            if(!empty($id)) {
-                $album = $this->getDoctrine()
-                    ->getRepository(Album::class)
-                    ->find($id);
+            $data = [];
+            foreach($this->getAlbumModalConfig()['tabs'] as $tabName => $tab) {
+                /**
+                 * Check if we use form as our content
+                 */
+                if(!empty($tab['form'])) {
 
-                if (!$album) {
-                    throw $this->createNotFoundException(
-                        $translator->trans('tool_no_album_found').' '. $id
-                    );
+                    if(!empty($id)) {
+                        $album = $this->getDoctrine()
+                            ->getRepository(Album::class)
+                            ->find($id);
+
+                        if (!$album) {
+                            throw $this->createNotFoundException(
+                                $translator->trans('tool_no_album_found').' '. $id
+                            );
+                        }
+                    }else{
+                        $album = new Album();
+                    }
+
+                    $entityName = $tab['form']['entity_class_name'];
+                    $formTypeName = $tab['form']['form_type_class_name'];
+                    $formView = $tab['form']['form_view_file'];
+                    $formId = $tab['form']['form_id'];
+
+                    /**
+                     * Create form
+                     */
+                    $param['form'] = $this->createForm($formTypeName, $album, [
+                        'attr' => [
+                            'id' => $formId
+                        ]
+                    ])->createView();
+
+                    $data[$tabName] = $this->renderView($formView, $param);
+                }else {
+                    $data[$tabName] = $tab['content'];
                 }
-            }else{
-                $album = new Album();
             }
-
-            /**
-             * Create album form
-             */
-            $form = $this->createForm(AlbumType::class, $album, [
-                'attr' => [
-                    'id' => 'album_form'
-                ]
-            ]);
-
-            return $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/form.html.twig', ['form' => $form->createView()]);
+            return new JsonResponse($data);
         }catch (\Exception $ex){
             exit($ex->getMessage());
         }
@@ -404,6 +416,21 @@ class AlbumController extends AbstractController
             $tableConfig = $this->translateConfig($tableConfig, $translator);
         }
         return $tableConfig;
+    }
+
+    /**
+     * Get modal config
+     * @return array|mixed
+     */
+    private function getAlbumModalConfig()
+    {
+        $translator = $this->get('translator');
+        $modalConfig = [];
+        if(!empty($this->parameters->get('symfony_demo_album_modal'))){
+            $modalConfig = $this->parameters->get('symfony_demo_album_modal');
+            $modalConfig = $this->translateConfig($modalConfig, $translator);
+        }
+        return $modalConfig;
     }
 
     /**

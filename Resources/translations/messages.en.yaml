@@ -6,6 +6,7 @@ tool_album_list: Album List
 tool_language_list: Language List
 
 tool_add_album: Add Album
+tool_save_album: Save
 tool_update_album: Update
 tool_confirm_modal_yes: Yes
 tool_confirm_modal_no: No
