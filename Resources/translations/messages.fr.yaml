@@ -5,6 +5,7 @@ tool_lang_table_desc: Le tableau ci-dessous affiche les données extraites des s
 tool_album_list: Liste des albums
 tool_language_list: Liste des langages du BO
 
+tool_save_album: Enregistrer
 tool_add_album: Ajouter un Album
 tool_update_album: Mettre a jour
 tool_confirm_modal_yes: Oui
