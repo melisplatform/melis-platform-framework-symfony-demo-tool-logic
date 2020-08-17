@@ -40,34 +40,30 @@ class AlbumController extends AbstractController
      */
     public function getAlbumTool(): Response
     {
-        try {
-            /**
-             * Get the languages on melis back office
-             */
-            $melisCoreTableLang = $this->melisServiceManager()->getService('MelisCoreTableLang');
-            $melisCorelangList = $melisCoreTableLang->fetchAll()->toArray();
+        /**
+         * Get the languages on melis back office
+         */
+        $melisCoreTableLang = $this->melisServiceManager()->getService('MelisCoreTableLang');
+        $melisCorelangList = $melisCoreTableLang->fetchAll()->toArray();
 
-            /**
-             * Get the album list using
-             * the album entity
-             */
-            $album = $this->getDoctrine()
-                ->getRepository(Album::class)
-                ->findAll();
+        /**
+         * Get the album list using
+         * the album entity
+         */
+        $album = $this->getDoctrine()
+            ->getRepository(Album::class)
+            ->findAll();
 
-            //add the action column
-            $view = $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/lists.html.twig',
-                [
-                    'album_list' => $album,
-                    'lang_core_list' => $melisCorelangList,
-                    "tableConfig" => $this->getAlbumTableConfig(),
-                    "modalConfig" => $this->getAlbumModalConfig()
-                ])->getContent();
+        //add the action column
+        $view = $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/lists.html.twig',
+            [
+                'album_list' => $album,
+                'lang_core_list' => $melisCorelangList,
+                "tableConfig" => $this->getAlbumTableConfig(),
+                "modalConfig" => $this->getAlbumModalConfig()
+            ])->getContent();
 
-            return new Response($view);
-        }catch (\Exception $ex){
-            exit($ex->getMessage());
-        }
+        return new Response($view);
     }
 
     /**
@@ -77,25 +73,20 @@ class AlbumController extends AbstractController
      */
     public function getAlbumPlugin(): Response
     {
-        try {
-            /**
-             * Get the album list using
-             * the album entity
-             */
-            $album = $this->getDoctrine()
-                ->getRepository(Album::class)
-                ->findAll();
+        /**
+         * Get the album list using
+         * the album entity
+         */
+        $album = $this->getDoctrine()
+            ->getRepository(Album::class)
+            ->findAll();
 
-            $view = $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/album_plugin.html.twig',
-                [
-                    'album_list' => $album
-                ])->getContent();
+        $view = $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/album_plugin.html.twig',
+            [
+                'album_list' => $album
+            ])->getContent();
 
-            return new Response($view);
-
-        }catch (\Exception $ex){
-            exit($ex->getMessage());
-        }
+        return new Response($view);
     }
 
     /**
@@ -170,52 +161,48 @@ class AlbumController extends AbstractController
      */
     public function createAlbumForm($id)
     {
-        try{
-            $translator = $this->get('translator');
-            $data = [];
-            foreach($this->getAlbumModalConfig()['tabs'] as $tabName => $tab) {
-                /**
-                 * Check if we use form as our content
-                 */
-                if(!empty($tab['form'])) {
+        $translator = $this->get('translator');
+        $data = [];
+        foreach($this->getAlbumModalConfig()['tabs'] as $tabName => $tab) {
+            /**
+             * Check if we use form as our content
+             */
+            if(!empty($tab['form'])) {
 
-                    if(!empty($id)) {
-                        $album = $this->getDoctrine()
-                            ->getRepository(Album::class)
-                            ->find($id);
+                if(!empty($id)) {
+                    $album = $this->getDoctrine()
+                        ->getRepository(Album::class)
+                        ->find($id);
 
-                        if (!$album) {
-                            throw $this->createNotFoundException(
-                                $translator->trans('tool_no_album_found').' '. $id
-                            );
-                        }
-                    }else{
-                        $album = new Album();
+                    if (!$album) {
+                        throw $this->createNotFoundException(
+                            $translator->trans('tool_no_album_found').' '. $id
+                        );
                     }
-
-                    $entityName = $tab['form']['entity_class_name'];
-                    $formTypeName = $tab['form']['form_type_class_name'];
-                    $formView = $tab['form']['form_view_file'];
-                    $formId = $tab['form']['form_id'];
-
-                    /**
-                     * Create form
-                     */
-                    $param['form'] = $this->createForm($formTypeName, $album, [
-                        'attr' => [
-                            'id' => $formId
-                        ]
-                    ])->createView();
-
-                    $data[$tabName] = $this->renderView($formView, $param);
-                }else {
-                    $data[$tabName] = $tab['content'];
+                }else{
+                    $album = new Album();
                 }
+
+                $entityName = $tab['form']['entity_class_name'];
+                $formTypeName = $tab['form']['form_type_class_name'];
+                $formView = $tab['form']['form_view_file'];
+                $formId = $tab['form']['form_id'];
+
+                /**
+                 * Create form
+                 */
+                $param['form'] = $this->createForm($formTypeName, $album, [
+                    'attr' => [
+                        'id' => $formId
+                    ]
+                ])->createView();
+
+                $data[$tabName] = $this->renderView($formView, $param);
+            }else {
+                $data[$tabName] = $tab['content'];
             }
-            return new JsonResponse($data);
-        }catch (\Exception $ex){
-            exit($ex->getMessage());
         }
+        return new JsonResponse($data);
     }
 
     /**
@@ -234,54 +221,50 @@ class AlbumController extends AbstractController
             'errors' => []
         ];
 
-        try {
-            $translator = $this->get('translator');
-            if($request->getMethod() == 'POST') {
-                $entityManager = $this->getDoctrine()->getManager();
-                if (empty($id)) {//create new album
-                    $album = new Album();
-                    //set typeCode form logs
-                    $typeCode = 'SYMFONY_DEMO_TOOL_SAVE';
-                } else {//update album
-                    $album = $entityManager->getRepository(Album::class)->find($id);
-                    //set typeCode form logs
-                    $typeCode = 'SYMFONY_DEMO_TOOL_UPDATE';
-                    if (!$album) {
-                        throw $this->createNotFoundException(
-                            $translator->trans('tool_no_album_found') .' '. $id
-                        );
-                    }
+        $translator = $this->get('translator');
+        if($request->getMethod() == 'POST') {
+            $entityManager = $this->getDoctrine()->getManager();
+            if (empty($id)) {//create new album
+                $album = new Album();
+                //set typeCode form logs
+                $typeCode = 'SYMFONY_DEMO_TOOL_SAVE';
+            } else {//update album
+                $album = $entityManager->getRepository(Album::class)->find($id);
+                //set typeCode form logs
+                $typeCode = 'SYMFONY_DEMO_TOOL_UPDATE';
+                if (!$album) {
+                    throw $this->createNotFoundException(
+                        $translator->trans('tool_no_album_found') .' '. $id
+                    );
                 }
-                $form = $this->createForm(AlbumType::class, $album);
-                $form->handleRequest($request);
-                //validate form
-                if($form->isSubmitted() && $form->isValid()) {
-                    $album = $form->getData();
-                    // tell Doctrine you want to (eventually) save the Album (no queries yet)
-                    $entityManager->persist($album);
-                    // executes the queries
-                    $entityManager->flush();
-                    //get id
-                    $itemId = $album->getAlbId();
-
-                    $result['message'] = (empty($id)) ? $translator->trans('tool_album_successfully_saved') : $translator->trans('tool_album_successfully_updated');
-                    $result['success'] = true;
-                    //set icon for flash messenger
-                    $icon = 'glyphicon-info-sign';
-                }else{
-                    $result['message'] = (empty($id)) ? $translator->trans('tool_unable_to_save_album') : $translator->trans('tool_unable_to_update_album');
-                    $result['errors'] = $this->getErrorsFromForm($form);
-                    //set icon for flash messenger
-                    $icon = 'glyphicon-warning-sign';
-                }
-
-                //add message notification
-                $this->addToFlashMessenger($result['title'], $result['message'], $icon);
-                //save logs
-                $this->saveLogs($result['title'], $result['message'], $result['success'], $typeCode, $itemId);
             }
-        }catch (\Exception $ex){
-            $result['message'] = $ex->getMessage();
+            $form = $this->createForm(AlbumType::class, $album);
+            $form->handleRequest($request);
+            //validate form
+            if($form->isSubmitted() && $form->isValid()) {
+                $album = $form->getData();
+                // tell Doctrine you want to (eventually) save the Album (no queries yet)
+                $entityManager->persist($album);
+                // executes the queries
+                $entityManager->flush();
+                //get id
+                $itemId = $album->getAlbId();
+
+                $result['message'] = (empty($id)) ? $translator->trans('tool_album_successfully_saved') : $translator->trans('tool_album_successfully_updated');
+                $result['success'] = true;
+                //set icon for flash messenger
+                $icon = 'glyphicon-info-sign';
+            }else{
+                $result['message'] = (empty($id)) ? $translator->trans('tool_unable_to_save_album') : $translator->trans('tool_unable_to_update_album');
+                $result['errors'] = $this->getErrorsFromForm($form);
+                //set icon for flash messenger
+                $icon = 'glyphicon-warning-sign';
+            }
+
+            //add message notification
+            $this->addToFlashMessenger($result['title'], $result['message'], $icon);
+            //save logs
+            $this->saveLogs($result['title'], $result['message'], $result['success'], $typeCode, $itemId);
         }
 
         return new JsonResponse($result);
