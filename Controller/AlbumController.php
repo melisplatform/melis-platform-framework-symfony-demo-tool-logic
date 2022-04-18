@@ -14,6 +14,8 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Psr\Container\ContainerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class AlbumController extends AbstractController
 {
@@ -22,14 +24,18 @@ class AlbumController extends AbstractController
      * @var ParameterBagInterface
      */
     protected $parameters;
+    protected $container;
+    protected $doctrine;
 
     /**
      * AlbumController constructor.
      * @param ParameterBagInterface $parameterBag
      */
-    public function __construct(ParameterBagInterface $parameterBag)
+    public function __construct(ParameterBagInterface $parameterBag, ContainerInterface $container, ManagerRegistry $doctrine)
     {
         $this->parameters = $parameterBag;
+        $this->container = $container;
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -50,7 +56,7 @@ class AlbumController extends AbstractController
          * Get the album list using
          * the album entity
          */
-        $album = $this->getDoctrine()
+        $album = $this->doctrine
             ->getRepository(Album::class)
             ->findAll();
 
@@ -77,7 +83,7 @@ class AlbumController extends AbstractController
          * Get the album list using
          * the album entity
          */
-        $album = $this->getDoctrine()
+        $album = $this->doctrine
             ->getRepository(Album::class)
             ->findAll();
 
@@ -129,7 +135,7 @@ class AlbumController extends AbstractController
         $search = $search['value'];
 
         //get repository
-        $repository = $this->getDoctrine()->getRepository(Album::class);
+        $repository = $this->doctrine->getRepository(Album::class);
         //get total records
         $total = $repository->getTotalRecords();
         //get data
@@ -161,7 +167,7 @@ class AlbumController extends AbstractController
      */
     public function createAlbumForm($id)
     {
-        $translator = $this->get('translator');
+        $translator = $this->container->get('translator');
         $data = [];
         foreach($this->getAlbumModalConfig()['tabs'] as $tabName => $tab) {
             /**
@@ -170,7 +176,7 @@ class AlbumController extends AbstractController
             if(!empty($tab['form'])) {
 
                 if(!empty($id)) {
-                    $album = $this->getDoctrine()
+                    $album = $this->doctrine
                         ->getRepository(Album::class)
                         ->find($id);
 
@@ -221,9 +227,9 @@ class AlbumController extends AbstractController
             'errors' => []
         ];
 
-        $translator = $this->get('translator');
+        $translator = $this->container->get('translator');
         if($request->getMethod() == 'POST') {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             if (empty($id)) {//create new album
                 $album = new Album();
                 //set typeCode form logs
@@ -282,7 +288,7 @@ class AlbumController extends AbstractController
         $typeCode = 'SYMFONY_DEMO_TOOL_DELETE';
         $id = $request->get('id', null);
 
-        $translator = $this->get('translator');
+        $translator = $this->container->get('translator');
 
         $result = [
             'title' => 'Album',
@@ -290,7 +296,7 @@ class AlbumController extends AbstractController
             'message' => $translator->trans('tool_cannot_delete_album'),
         ];
         try {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->doctrine->getManager();
             $album = $entityManager->getRepository(Album::class)->find($id);
             $entityManager->remove($album);
             $entityManager->flush();
@@ -316,7 +322,7 @@ class AlbumController extends AbstractController
      */
     private function getErrorsFromForm(FormInterface $form)
     {
-        $translator = $this->get('translator');
+        $translator = $this->container->get('translator');
         $errors = array();
         foreach ($form->getErrors() as $error) {
             $errors[] = $error->getMessage();
@@ -392,7 +398,7 @@ class AlbumController extends AbstractController
      */
     private function getAlbumTableConfig()
     {
-        $translator = $this->get('translator');
+        $translator = $this->container->get('translator');
         $tableConfig = [];
         if(!empty($this->parameters->get('symfony_demo_album_table'))){
             $tableConfig = $this->parameters->get('symfony_demo_album_table');
@@ -407,7 +413,7 @@ class AlbumController extends AbstractController
      */
     private function getAlbumModalConfig()
     {
-        $translator = $this->get('translator');
+        $translator = $this->container->get('translator');
         $modalConfig = [];
         if(!empty($this->parameters->get('symfony_demo_album_modal'))){
             $modalConfig = $this->parameters->get('symfony_demo_album_modal');
@@ -440,6 +446,6 @@ class AlbumController extends AbstractController
      */
     private function melisServiceManager()
     {
-        return $this->get('melis_platform.service_manager');
+        return $this->container->get('melis_platform.service_manager');
     }
 }
