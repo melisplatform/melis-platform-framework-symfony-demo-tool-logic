@@ -249,6 +249,7 @@ class AlbumController extends AbstractController
             //validate form
             if($form->isSubmitted() && $form->isValid()) {
                 $album = $form->getData();
+                $album->setAlbDate(date("Y-m-d H:i:s", time())); 
                 // tell Doctrine you want to (eventually) save the Album (no queries yet)
                 $entityManager->persist($album);
                 // executes the queries
