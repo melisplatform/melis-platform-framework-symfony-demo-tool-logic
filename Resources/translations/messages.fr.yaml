@@ -1,5 +1,5 @@
-tool_title: Un embryon d'outil fait en Symfony4
-tool_description: Cet outil a pour but de montrer comment utiliser le framework Symfony4 à l'intérieur de Melis Platform, et ne pas être bloqué en ZF.
+tool_title: Un embryon d'outil fait en Symfony5
+tool_description: Cet outil a pour but de montrer comment utiliser le framework Symfony5 à l'intérieur de Melis Platform, et ne pas être bloqué en ZF.
 tool_album_table_desc: Le tableau ci-dessous affiche les données extraites de la base de données en utilisant Symfony.
 tool_lang_table_desc: Le tableau ci-dessous affiche les données extraites des services de Melis Platform en utilisant Symfony.
 tool_album_list: Liste des albums

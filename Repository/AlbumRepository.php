@@ -5,7 +5,7 @@ namespace MelisPlatformFrameworkSymfonyDemoToolLogic\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use MelisPlatformFrameworkSymfonyDemoToolLogic\Entity\Album;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Album|null find($id, $lockMode = null, $lockVersion = null)
@@ -23,9 +23,9 @@ class AlbumRepository extends ServiceEntityRepository
 
     /**
      * AlbumRepository constructor.
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Album::class);
     }
