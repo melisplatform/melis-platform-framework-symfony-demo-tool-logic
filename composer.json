@@ -25,7 +25,7 @@
 	],
 	"require": {
 		"php": "^8.1|^8.3",
-		"melisplatform/melis-platform-framework-symfony-demo-tool": "dev-update/php83"
+		"melisplatform/melis-platform-framework-symfony-demo-tool": "*"
 	},
 	"autoload": {
 		"psr-4": {
