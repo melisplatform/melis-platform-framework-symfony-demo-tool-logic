@@ -6,32 +6,25 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-/**
- * @ORM\Table(name="melis_demo_album")
- * @ORM\Entity(repositoryClass="MelisPlatformFrameworkSymfonyDemoToolLogic\Repository\AlbumRepository")
- */
+
+#[ORM\Table(name: "melis_demo_album")]
+#[ORM\Entity(repositoryClass: "MelisPlatformFrameworkSymfonyDemoToolLogic\Repository\AlbumRepository")]
 class Album
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+
+    #[ORM\Id()]
+    #[ORM\GeneratedValue()]
+    #[ORM\Column(type: "integer")]
     private $alb_id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     private $alb_name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     private $alb_song_num;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
     private $alb_date;
 
 

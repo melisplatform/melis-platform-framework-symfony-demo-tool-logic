@@ -2,7 +2,10 @@ services:
   MelisPlatformFrameworkSymfonyDemoToolLogic\Controller\AlbumController:
     autowire: true
     public: true
-    arguments: ['@parameter_bag']
+    arguments: ['@parameter_bag', '@service_container', '@twig', '@form.factory'],
+    calls:
+      - setContainer: ['@service_container']
+
   MelisPlatformFrameworkSymfonyDemoToolLogic\Repository\AlbumRepository:
     autowire: true
     tags: ['doctrine.repository_service']

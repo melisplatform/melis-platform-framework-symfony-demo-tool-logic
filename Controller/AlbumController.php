@@ -6,6 +6,7 @@ use MelisPlatformFrameworkSymfonyDemoToolLogic\Entity\Album;
 use MelisPlatformFrameworkSymfonyDemoToolLogic\Form\Type\AlbumType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Psr\Container\ContainerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Twig\Environment;
 
 class AlbumController extends AbstractController
 {
@@ -26,16 +28,30 @@ class AlbumController extends AbstractController
     protected $parameters;
     protected $container;
     protected $doctrine;
+    protected $twig;
+    protected $formFactory;
 
     /**
      * AlbumController constructor.
      * @param ParameterBagInterface $parameterBag
      */
-    public function __construct(ParameterBagInterface $parameterBag, ContainerInterface $container, ManagerRegistry $doctrine)
+    public function __construct(ParameterBagInterface $parameterBag,
+                                ContainerInterface $container,
+                                Environment $twig,
+                                FormFactoryInterface $formFactory,
+                                ManagerRegistry $doctrine
+    )
     {
         $this->parameters = $parameterBag;
         $this->container = $container;
         $this->doctrine = $doctrine;
+        $this->twig = $twig;
+        $this->formFactory = $formFactory;
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        return parent::getSubscribedServices();
     }
 
     /**
@@ -61,13 +77,13 @@ class AlbumController extends AbstractController
             ->findAll();
 
         //add the action column
-        $view = $this->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/lists.html.twig',
+        $view = $this->twig->render('@MelisPlatformFrameworkSymfonyDemoToolLogic/lists.html.twig',
             [
                 'album_list' => $album,
                 'lang_core_list' => $melisCorelangList,
                 "tableConfig" => $this->getAlbumTableConfig(),
                 "modalConfig" => $this->getAlbumModalConfig()
-            ])->getContent();
+            ]);
 
         return new Response($view);
     }
@@ -197,13 +213,13 @@ class AlbumController extends AbstractController
                 /**
                  * Create form
                  */
-                $param['form'] = $this->createForm($formTypeName, $album, [
+                $param['form'] = $this->formFactory->create($formTypeName, $album, [
                     'attr' => [
                         'id' => $formId
                     ]
                 ])->createView();
 
-                $data[$tabName] = $this->renderView($formView, $param);
+                $data[$tabName] = $this->twig->render($formView, $param);
             }else {
                 $data[$tabName] = $tab['content'];
             }
@@ -244,7 +260,7 @@ class AlbumController extends AbstractController
                     );
                 }
             }
-            $form = $this->createForm(AlbumType::class, $album);
+            $form = $this->formFactory->create(AlbumType::class, $album);
             $form->handleRequest($request);
             //validate form
             if($form->isSubmitted() && $form->isValid()) {
